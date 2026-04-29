@@ -1,0 +1,846 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pathways: A Reading Development Equity Simulator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="skip-links" aria-label="Skip links">
+      <a href="#simulator-form">Skip to controls</a>
+      <a href="#live-results">Skip to results</a>
+      <a href="#learn-more">Skip to explanation</a>
+    </nav>
+    <div id="live-region" aria-live="polite" class="visually-hidden"></div>
+    <div id="audio-live-region" aria-live="polite" class="visually-hidden"></div>
+    <main class="app-shell">
+      <header class="hero readable-section" id="hero-section">
+        <div>
+          <p class="section-kicker">Understand the Question</p>
+          <p class="eyebrow">Memory, Money, Milestones</p>
+          <h1>Pathways: A Reading Development Equity Simulator</h1>
+          <p>
+            Explore how early working memory, socioeconomic context, and
+            reading-focused supports can interact over time.
+          </p>
+          <div class="research-question">
+            <div class="label">Research Question</div>
+            <div class="question">
+              Does socioeconomic status (SES) moderate the relationship between
+              early working memory and fifth-grade reading achievement?
+            </div>
+          </div>
+          <p class="purpose-statement purpose-callout">
+            This tool helps show how early skills and access to support
+            interact. It is designed to support conversations about equity,
+            instruction, and intervention, not to predict individual outcomes.
+          </p>
+          <button class="listen-btn" data-read-target="hero-section" type="button" aria-pressed="false">
+            <span aria-hidden="true">🔊</span> Listen to research question
+          </button>
+        </div>
+        <div class="hero-actions">
+          <button class="contrast-toggle" id="contrast-toggle" type="button" aria-label="Change contrast mode">
+            Contrast: Default
+          </button>
+          <p class="contrast-helper">
+            Contrast options include a dark mode with black background and
+            light text for low-vision comfort.
+          </p>
+          <button id="stop-all-audio" class="audio-control" type="button" aria-label="Stop all audio playback">Stop all audio</button>
+        </div>
+      </header>
+
+      <details class="plain-summary readable-section" id="plain-language-summary">
+        <summary aria-expanded="false">Plain language summary</summary>
+        <button class="listen-btn" data-read-target="plain-language-summary" type="button" aria-pressed="false">
+          <span aria-hidden="true">🔊</span> Listen to plain language summary
+        </button>
+        <p>
+          This tool shows how reading growth can be shaped by both early skills
+          and access to support. The numbers are not test scores. They are
+          simplified estimates that help compare different learning
+          environments.
+        </p>
+      </details>
+
+      <section class="simulator readable-section" id="interactive-simulator" aria-labelledby="simulator-title">
+        <div class="simulator-heading">
+          <div>
+            <p class="section-kicker">Explore the Model</p>
+            <p class="eyebrow">Interactive Simulator</p>
+            <h2 id="simulator-title">Adjust the pathway</h2>
+            <p>
+              Choose a guided preset or adjust the controls. The live results
+              update immediately.
+            </p>
+            <button class="listen-btn" data-read-target="interactive-simulator" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to simulator overview
+            </button>
+          </div>
+          <button class="reset-button" id="reset-pathway" type="button">Reset pathway</button>
+        </div>
+
+        <section class="exploration-mode mode-toggle" aria-labelledby="exploration-mode-title">
+          <fieldset class="mode-selector">
+            <legend id="exploration-mode-title">Choose how to explore</legend>
+            <label class="toggle-btn mode-option active" aria-pressed="true">
+              <input type="radio" name="exploration-mode" value="guided" checked />
+              <span>Guided exploration</span>
+            </label>
+            <label class="toggle-btn mode-option" aria-pressed="false">
+              <input type="radio" name="exploration-mode" value="free" />
+              <span>Free exploration</span>
+            </label>
+          </fieldset>
+        </section>
+
+        <section
+          class="guided-step-panel"
+          id="guided-step-panel"
+          aria-labelledby="guided-step-title"
+          aria-live="polite"
+          tabindex="-1"
+        >
+          <button class="tutorial-close" id="tutorial-close" type="button" aria-label="Close tutorial">✕</button>
+          <p class="guided-progress step-counter tutorial-step-counter" id="guided-progress">Step 1 of 3</p>
+          <h3 id="guided-step-title" tabindex="-1">Same skill, different environments</h3>
+          <p id="guided-step-prompt">
+            Start with the same working memory level and compare how reading
+            growth changes across SES contexts.
+          </p>
+          <div class="guided-task" id="guided-task">
+            Task: Keep working memory at 5. Change SES and notice how the
+            outcome shifts.
+          </div>
+          <div class="guided-actions tutorial-controls guided-controls">
+            <button class="guided-action-button" id="guided-step-action" type="button">
+              Try this step
+            </button>
+            <div class="guided-nav">
+              <button class="guided-nav-button" id="guided-back" type="button">Back</button>
+              <button class="guided-nav-button" id="guided-next" type="button">Next</button>
+            </div>
+          </div>
+          <p class="guided-step-note" id="guided-step-note" aria-live="polite"></p>
+          <p class="sr-only" id="guided-focus-announcement" aria-live="polite"></p>
+          <div class="tutorial-focus-heading is-hidden" id="tutorial-focus-heading">
+            Current tutorial focus: Socioeconomic status controls
+          </div>
+          <div class="guided-complete is-hidden" id="guided-complete" aria-live="polite" tabindex="-1">
+            <p>
+              You completed the guided walkthrough. You can now explore freely
+              or reset the pathway.
+            </p>
+            <div class="guided-complete-actions">
+              <button class="guided-nav-button" id="guided-explore-free" type="button">
+                Explore freely
+              </button>
+              <button class="guided-nav-button" id="guided-restart" type="button">
+                Restart tutorial
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <div class="simulator-grid">
+          <form class="controls left-panel" id="simulator-form">
+            <div class="scenario-section">
+              <h3>Start with a scenario</h3>
+              <p class="section-helper">Choose a preset to explore a common pattern.</p>
+              <div class="scenario-list preset-list">
+                <button class="scenario-card" type="button" data-scenario="environment">
+                  <span class="active-badge">Active</span>
+                  <strong>Same skill, different environment</strong>
+                  <span>Set memory to 5 and compare low/high SES.</span>
+                </button>
+                <button class="scenario-card" type="button" data-scenario="support">
+                  <span class="active-badge">Active</span>
+                  <strong>Impact of support</strong>
+                  <span>Set low SES and compare no/strong support.</span>
+                </button>
+                <button class="scenario-card" type="button" data-scenario="skills">
+                  <span class="active-badge">Active</span>
+                  <strong>Strong skills, different outcomes</strong>
+                  <span>Set memory to 8 and compare SES levels.</span>
+                </button>
+              </div>
+              <p class="scenario-notice is-hidden" id="scenario-notice" aria-live="polite"></p>
+            </div>
+
+            <hr class="section-divider" />
+
+            <div class="controls-section">
+              <h3>Adjust the pathway</h3>
+              <p class="section-helper">Change these settings to see how outcomes shift.</p>
+              <div class="active-preset is-hidden" id="active-preset">Preset applied: Impact of support</div>
+              <label class="audio-toggle">
+                <input
+                  type="checkbox"
+                  id="audio-description-toggle"
+                  aria-label="Enable audio descriptions"
+                  checked
+                />
+                Enable audio descriptions
+              </label>
+
+              <div class="control-group" id="ses-group">
+                <h4>Environment</h4>
+                <fieldset class="control-section option-group focus-target" id="ses-control">
+                  <legend>Socioeconomic status</legend>
+                  <label>
+                    <input type="radio" name="ses" value="low" />
+                    <span><strong><span aria-hidden="true">💵</span> Low</strong><small>Lower resource access</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="ses" value="average" checked />
+                    <span><strong><span aria-hidden="true">💵💵</span> Average</strong><small>Moderate resource access</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="ses" value="high" />
+                    <span><strong><span aria-hidden="true">💵💵💵</span> High</strong><small>Higher resource access</small></span>
+                  </label>
+                  <p class="ses-icon-note">
+                    Money icons are used as visual shorthand for resource
+                    access, not individual worth or ability.
+                  </p>
+                </fieldset>
+              </div>
+
+              <div class="control-group" id="memory-group">
+                <h4>Cognitive skill</h4>
+                <section class="control-section slider-block" id="memory-control">
+                  <div class="control-label-row">
+                    <label for="memory-score"><span aria-hidden="true">🧠</span> Early working memory level</label>
+                    <output class="memory-value working-memory-value slider-value" id="memory-output" for="memory-score">5</output>
+                  </div>
+                  <p class="control-helper">
+                    Use this slider to estimate how easily a child can hold and
+                    work with information while reading.
+                  </p>
+                  <input
+                    id="memory-score"
+                    name="memory"
+                    type="range"
+                    min="1"
+                    max="10"
+                    value="5"
+                    step="1"
+                    aria-label="Estimated working memory level"
+                    aria-valuemin="1"
+                    aria-valuemax="10"
+                    aria-valuenow="5"
+                    aria-valuetext="Moderate working memory level, 5 out of 10"
+                  />
+                  <div class="range-labels" aria-hidden="true">
+                    <span>1-3 Low</span>
+                    <span>4-7 Moderate</span>
+                    <span>8-10 High</span>
+                  </div>
+                </section>
+              </div>
+
+              <div class="control-group" id="support-group">
+                <h4>Resources</h4>
+                <fieldset class="control-section option-group focus-target" id="support-control">
+                  <legend><span aria-hidden="true">📚</span> Resource support</legend>
+                  <label>
+                    <input type="radio" name="support" value="none" checked />
+                    <span><strong>No support</strong><small>Baseline pathway</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="support" value="moderate" />
+                    <span><strong>Moderate</strong><small>Some added supports</small></span>
+                  </label>
+                  <label>
+                    <input type="radio" name="support" value="strong" />
+                    <span><strong>Strong</strong><small>Targeted resources</small></span>
+                  </label>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+
+          <aside class="live-results focus-target" id="live-results" aria-labelledby="live-results-title" aria-live="polite">
+            <p class="active-scenario-label" id="active-scenario-label">Custom pathway</p>
+            <h2 id="live-results-title">Live Results</h2>
+            <button class="listen-btn" data-read-target="live-results" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to live results
+            </button>
+
+            <div class="tabs" role="tablist" aria-label="Live result views">
+              <button id="tab-outcome" class="tab-button is-active" type="button" role="tab" aria-selected="true" aria-controls="panel-outcome" data-tab="outcome">Outcome</button>
+              <button id="tab-compare" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="panel-compare" data-tab="compare">Compare</button>
+              <button id="tab-support" class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="panel-support" data-tab="support">Support Impact</button>
+            </div>
+
+            <section id="panel-outcome" class="tab-panel" role="tabpanel" aria-labelledby="tab-outcome">
+              <p class="score-label">Estimated Reading Growth Level</p>
+              <div class="score-wrap" id="score-wrap">
+                <span class="score result-number" id="predicted-score">61.04</span>
+                <span class="support-delta-badge is-hidden" id="support-delta-badge">+0.0 from support</span>
+              </div>
+              <p class="growth-label" id="growth-label">Moderate expected reading growth</p>
+              <p class="change-label ready-label" id="change-label">Ready to explore</p>
+              <div class="single-bar" aria-label="Current estimated reading growth">
+                <span class="single-bar-fill" id="single-bar-fill"></span>
+              </div>
+              <p class="chart-summary" id="outcome-summary"></p>
+            </section>
+
+            <section id="panel-compare" class="tab-panel is-hidden" role="tabpanel" aria-labelledby="tab-compare">
+              <h3>Same skill, different environments</h3>
+              <p class="sr-only" id="comparison-chart-description"></p>
+              <div class="mini-chart" id="comparison-chart"></div>
+              <p class="chart-summary" id="comparison-summary"></p>
+            </section>
+
+            <section id="panel-support" class="tab-panel is-hidden focus-target" role="tabpanel" aria-labelledby="tab-support">
+              <h3 tabindex="-1">Support impact</h3>
+              <p class="sr-only" id="support-chart-description"></p>
+              <div class="mini-chart" id="support-chart"></div>
+              <p class="chart-summary" id="support-summary"></p>
+              <p class="sr-only" id="gap-chart-description"></p>
+              <div class="gap-mini" id="gap-mini"></div>
+              <p class="chart-summary" id="gap-summary"></p>
+            </section>
+
+            <div class="interaction-insight is-hidden" aria-live="polite">
+              <strong>Insight</strong>
+              <p id="interaction-insight-text">
+                Adjust the controls to explore how working memory, SES, and
+                support shape reading growth.
+              </p>
+            </div>
+
+            <section class="case-study-panel case-study-section readable-section" id="maya-case-study" aria-labelledby="maya-case-study-title" aria-live="polite">
+              <p class="section-kicker">See the Human Impact</p>
+              <p class="pathway-context-badge limited" id="pathway-context-badge" title="Fewer consistent resources available">
+                Current scenario: Limited support scenario
+              </p>
+              <h3 id="maya-case-study-title">Same student, different outcomes</h3>
+              <p class="case-study-intro">
+                Watch how Maya's reading pathway changes as you adjust SES,
+                working memory, and support.
+              </p>
+              <p class="story-try-prompt">
+                Try this: Change one setting, like support or SES, and watch
+                how Maya's story changes. Small changes in environment can
+                shift the reading pathway.
+              </p>
+              <p class="story-clarification">
+                This fictional case study is meant to illustrate how different
+                learning environments can shape reading development.
+              </p>
+              <button class="listen-btn" data-read-target="maya-case-study" type="button" aria-pressed="false">
+                <span aria-hidden="true">🔊</span> Listen to Maya's story
+              </button>
+              <div class="student-story" id="student-example-text">
+                <div class="story-section before" id="story-section-before">
+                  <div class="story-label">Before support</div>
+                  <p id="storyBefore"></p>
+                </div>
+
+                <div class="story-section after" id="story-section-after">
+                  <div class="story-label">After support</div>
+                  <p id="storyAfter"></p>
+                </div>
+
+                <div class="story-section change" id="story-section-change">
+                  <div class="story-label">What changed</div>
+                  <p id="storyChange"></p>
+                </div>
+
+                <div class="story-section why" id="story-section-why">
+                  <div class="story-label">Why this changed</div>
+                  <p id="storyWhy"></p>
+                </div>
+              </div>
+            </section>
+
+            <section class="action-layer readable-section" id="action-layer" aria-labelledby="action-layer-title">
+              <p class="section-kicker">Apply in Real Life</p>
+              <div id="storyActionBridge" class="bridge-text">
+                These supports reflect what Maya begins to experience in this
+                scenario.
+              </div>
+              <h3 id="action-layer-title">🛠 What can support look like in real life?</h3>
+              <button class="listen-btn" data-read-target="action-layer" type="button" aria-pressed="false">
+                <span aria-hidden="true">🔊</span> Listen to real-life supports
+              </button>
+              <p id="support-context-text"></p>
+              <ul class="support-recommendations" id="support-recommendations"></ul>
+              <p class="action-disclaimer">
+                These are general examples of supports that can help strengthen
+                reading development. They are not individualized
+                recommendations.
+              </p>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <nav
+        class="guided-sticky-nav guided-action-bar tutorial-action-bar tutorial-footer is-hidden"
+        id="guided-sticky-nav"
+        aria-label="Guided exploration navigation"
+        aria-live="polite"
+      >
+        <div class="guided-sticky-meta">
+          <span class="step-counter tutorial-step-counter" id="sticky-guided-progress">Step 1 of 3</span>
+          <strong id="sticky-guided-title">Same skill, different environments</strong>
+        </div>
+        <button class="tutorial-close" id="sticky-tutorial-close" type="button" aria-label="Close tutorial">✕</button>
+        <div class="guided-sticky-actions tutorial-controls guided-controls" id="sticky-guided-actions">
+          <button
+            class="guided-nav-button"
+            id="sticky-guided-back"
+            type="button"
+            aria-label="Go to previous guided step"
+          >
+            Back
+          </button>
+          <button
+            class="guided-action-button"
+            id="sticky-guided-action"
+            type="button"
+            aria-label="Try current guided step"
+          >
+            Try this step
+          </button>
+          <button
+            class="guided-nav-button"
+            id="sticky-guided-next"
+            type="button"
+            aria-label="Go to next guided step"
+          >
+            Next
+          </button>
+        </div>
+        <div class="guided-sticky-complete tutorial-controls guided-controls is-hidden" id="sticky-guided-complete">
+          <span>You completed the guided walkthrough.</span>
+          <button class="guided-nav-button" id="sticky-guided-free" type="button">
+            Explore freely
+          </button>
+          <button class="guided-nav-button" id="sticky-guided-restart" type="button">
+            Restart tutorial
+          </button>
+        </div>
+      </nav>
+
+      <section class="learn-more readable-section" id="learn-more" aria-labelledby="learn-more-title">
+        <p class="eyebrow">Learn More</p>
+        <h2 id="learn-more-title">Deeper context</h2>
+        <button class="listen-btn" data-read-target="learn-more" type="button" aria-pressed="false">
+          <span aria-hidden="true">🔊</span> Listen to deeper context overview
+        </button>
+
+        <details id="ses-meaning" class="readable-section">
+          <summary aria-expanded="false">What SES means</summary>
+          <div class="details-body">
+            <button class="listen-btn" data-read-target="ses-meaning" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to what SES means
+            </button>
+            <p>
+              Socioeconomic status (SES) in this model is based on how the
+              Early Childhood Longitudinal Study (ECLS-K:2011) defines it. It
+              is a composite measure that combines parent or caregiver
+              education, parent or caregiver occupation, and household income.
+            </p>
+            <p>
+              Together, these factors represent the resources and opportunities
+              available in a child's home and school environment. SES does not
+              measure a child's ability. It reflects the conditions that can
+              support or shape how learning develops over time.
+            </p>
+            <h3>What do these factors mean?</h3>
+            <p>
+              <strong>Educational attainment</strong> refers to the highest
+              level of schooling completed by a parent or caregiver, such as a
+              high school diploma, technical training, college, or an advanced
+              degree.
+            </p>
+            <p>
+              <strong>Occupation</strong> refers to the type of work a caregiver
+              has and how stable or secure that work is over time. In studies
+              like ECLS-K:2011, occupations can be assigned scores based on
+              national data about income, education requirements, and social
+              standing.
+            </p>
+            <p>
+              <strong>Household income</strong> refers to financial resources
+              available to a household, such as the ability to afford books,
+              tutoring, stable housing, or flexible responses to learning needs.
+            </p>
+            <p class="note">
+              These categories are simplified representations of a complex
+              measure used in research. They are included to help explore
+              patterns, not to define individuals.
+            </p>
+          </div>
+        </details>
+
+        <details id="working-memory-meaning" class="readable-section">
+          <summary aria-expanded="false">What working memory means</summary>
+          <div class="details-body">
+            <button class="listen-btn" data-read-target="working-memory-meaning" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to working memory explanation
+            </button>
+            <p>
+              Working memory in the ECLS-K:2011 was measured using the Numbers
+              Reversed task from the Woodcock-Johnson III. In this task,
+              children hear a sequence of numbers and repeat them back in
+              reverse order. For example, if the assessor says "1-6," the child
+              would say "6-1." The task becomes more difficult as the number
+              sequences get longer.
+            </p>
+            <p>
+              In this simulator, the 1-10 slider is a simplified version of
+              that idea. It represents how easily a child may hold and work with
+              information while reading.
+            </p>
+            <p class="note">
+              This is not a formal working memory test. It is an estimate used
+              to explore patterns in the model.
+            </p>
+            <div class="reading-memory-guide" aria-label="What working memory may look like while reading">
+              <p><strong>Plain-language examples</strong></p>
+              <ul>
+                <li><strong>Low:</strong> May lose track of details or steps in longer reading tasks.</li>
+                <li><strong>Moderate:</strong> Can usually follow reading tasks but may need support with longer or more complex texts.</li>
+                <li><strong>High:</strong> Can more easily hold details in mind and connect ideas across a text.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <details id="early-reading-matters" class="readable-section">
+          <summary aria-expanded="false">Why early reading matters</summary>
+          <div class="details-body">
+            <button class="listen-btn" data-read-target="early-reading-matters" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to why early reading matters
+            </button>
+            <p>
+              Early reading development is not just an academic milestone. It is
+              a key point in a larger pathway that can shape educational access,
+              opportunity, and long-term outcomes.
+            </p>
+            <p>
+              Students who experience reading difficulty in the early grades may
+              be more likely to face academic frustration, disengagement, and
+              reduced access to advanced learning opportunities. These patterns
+              are not fixed outcomes, but they show why early support matters.
+            </p>
+            <p>
+              In some communities, academic barriers intersect with disciplinary
+              systems, economic inequality, and broader structural conditions.
+              This connection is often discussed as part of the school-to-prison
+              pipeline.
+            </p>
+            <p>
+              This simulator does not predict a child's future. It shows how
+              early reading development, socioeconomic context, and resource
+              support can interact to widen or narrow opportunity pathways.
+            </p>
+            <p class="note">
+              Population-level pattern, not individual destiny: These pathways
+              describe broader social patterns. A child's future is never
+              determined by one score, one skill, or one circumstance.
+            </p>
+            <div class="pathway-columns">
+              <article>
+                <h3>Supported Reading Pathway</h3>
+                <ol>
+                  <li>Early reading support</li>
+                  <li>Stronger reading confidence</li>
+                  <li>Continued school engagement</li>
+                  <li>Expanded opportunity pathways</li>
+                </ol>
+              </article>
+              <article>
+                <h3>Unsupported Reading Pathway</h3>
+                <ol>
+                  <li>Reading difficulty without support</li>
+                  <li>Academic frustration</li>
+                  <li>Increased risk of disengagement</li>
+                  <li>Narrowed opportunity pathways</li>
+                </ol>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details id="resource-gap-narrowing" class="readable-section">
+          <summary aria-expanded="false">Resource intervention and gap narrowing</summary>
+          <div class="details-body">
+            <button class="listen-btn" data-read-target="resource-gap-narrowing" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to resource intervention
+            </button>
+            <p>
+              Access to educational resources can significantly shape reading
+              development, especially for students in under-resourced
+              environments.
+            </p>
+            <p>
+              Research shows that when additional academic supports, such as
+              tutoring, structured reading time, and enriched learning
+              environments, are introduced, students can make measurable gains
+              in reading achievement.
+            </p>
+            <p>
+              Recent large-scale evidence from pandemic recovery efforts further
+              reinforces this. The Education Recovery Scorecard found that
+              federal relief dollars helped prevent larger losses in
+              high-poverty districts, and that districts investing more in
+              academic interventions, such as tutoring or summer school, saw
+              stronger achievement growth.
+              <a
+                href="https://www.nber.org/papers/w32897"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read the NBER working paper.
+              </a>
+            </p>
+            <p>
+              This demonstrates that while early cognitive skills like working
+              memory matter, access to consistent, high-quality support can
+              buffer disadvantages and shift learning trajectories.
+            </p>
+            <p>
+              In other words, outcomes are not fixed. Targeted interventions can
+              meaningfully change a student's pathway.
+            </p>
+            <p class="sr-only" id="full-support-chart-description"></p>
+            <div class="full-support-grid" id="support-comparison-grid"></div>
+            <p class="chart-summary" id="full-support-summary"></p>
+            <div class="gap-panel">
+              <h3>How targeted support may narrow reading outcome gaps</h3>
+              <p class="sr-only" id="full-gap-chart-description"></p>
+              <div class="gap-chart" id="gap-chart"></div>
+              <p>This shows how targeted resources can reduce outcome differences between groups.</p>
+              <p class="chart-summary" id="full-gap-summary"></p>
+            </div>
+          </div>
+        </details>
+
+      </section>
+
+      <section class="use-panel" aria-labelledby="use-title">
+        <h2 id="use-title">How this tool can be used</h2>
+        <ul>
+          <li><strong>For educators:</strong> to understand how environment shapes reading development</li>
+          <li><strong>For curriculum designers:</strong> to identify where interventions may have the greatest impact</li>
+          <li><strong>For caregivers:</strong> to see how support at home can influence reading growth</li>
+        </ul>
+      </section>
+
+      <section class="research-sources readable-section" id="project-materials" aria-labelledby="research-sources-title">
+        <details>
+          <summary aria-expanded="false" id="research-sources-title">My Project Materials</summary>
+          <div class="details-body research-body">
+            <button class="listen-btn" data-read-target="project-materials" type="button" aria-pressed="false">
+              <span aria-hidden="true">🔊</span> Listen to project materials
+            </button>
+            <div class="project-material-card">
+              <h3>Research Abstract</h3>
+
+              <p class="material-context">
+                This research informs the logic behind the interactive
+                simulator, showing how SES changes the role of early cognitive
+                skills in reading development.
+              </p>
+
+              <p class="abstract-text">
+                This study investigates how socioeconomic status (SES)
+                moderates the relationship between early working memory and
+                later academic achievement, using data from the Early Childhood
+                Longitudinal Study, Kindergarten Class of 2010-11
+                (ECLS-K:2011).
+              </p>
+
+              <p class="abstract-text">
+                A moderation analysis was conducted to assess how kindergarten
+                fall working memory (KFWM) predicts fifth-grade reading scores
+                (G5R) across varying levels of kindergarten SES (KSES). The
+                results reveal a significant interaction effect, indicating
+                that the strength of the relationship between KFWM and G5R
+                differs by SES level.
+              </p>
+
+              <p class="abstract-text">
+                Specifically, the predictive power of early working memory on
+                later reading achievement diminishes for children from higher
+                SES backgrounds, suggesting that additional resources and
+                supports may buffer the impact of cognitive skills on academic
+                outcomes. Conversely, for lower SES children, early cognitive
+                skills like working memory play a more pivotal role in
+                educational success, potentially due to fewer compensatory
+                supports.
+              </p>
+
+              <p class="abstract-text">
+                Compensatory supports of enriched learning environments,
+                extracurricular support, and parental involvement mitigate
+                reliance on early cognitive skills. These findings highlight SES
+                as a contextual moderator that shapes academic trajectories
+                through complex, indirect pathways rather than a simple causal
+                link.
+              </p>
+
+              <p class="keywords">
+                <strong>Keywords:</strong> Socioeconomic status (SES), Working
+                memory (WM), Early Childhood Longitudinal Study, Moderation
+                analysis, Interaction effect, Academic outcomes, Targeted
+                educational interventions
+              </p>
+            </div>
+
+            <section aria-labelledby="about-study-title">
+              <h3 id="about-study-title">About my faculty-reviewed project</h3>
+              <p>
+                This project is based on faculty-reviewed research examining how
+                socioeconomic status (SES) moderates the relationship between
+                early working memory and fifth-grade reading achievement.
+              </p>
+              <p>
+                The analysis uses data from the Early Childhood Longitudinal
+                Study (ECLS-K:2011), which follows a large, nationally
+                representative sample of children across multiple years.
+              </p>
+              <p>
+                In this study context, SES is a composite measure that includes
+                parent or caregiver education, parent or caregiver occupation,
+                and household income. Together, these factors describe access
+                to resources and opportunities around learning.
+              </p>
+              <p class="note">
+                Results reflect population-level patterns. They are not meant
+                to predict any individual child's future.
+              </p>
+            </section>
+
+            <section aria-labelledby="project-materials-title">
+              <h3 id="project-materials-title">View project materials</h3>
+              <div class="source-links">
+                <a href="https://docs.google.com/document/d/1XeCNxgL-aTILD_yCuNvy3U8-UIgH-tYLDTTXlGyUOXA/edit?tab=t.0" target="_blank" rel="noopener noreferrer" aria-label="Read the Memory, Money, Milestones research paper in a new tab">
+                  📄 Read the research paper
+                </a>
+                <a href="assets/memory-money-milestones-poster.jpeg" target="_blank" rel="noopener noreferrer" aria-label="View the Memory, Money, Milestones research poster in a new tab">
+                  📊 View the research poster
+                </a>
+                <a href="https://drive.google.com/file/d/1XXkIorTymuEigTdNt1IPtr9-F856uN_G/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="View the presentation slides in a new tab">
+                  🖥 View the presentation slides
+                </a>
+              </div>
+              <p class="source-note">
+                Paper, poster, and presentation materials are linked here as
+                project artifacts.
+              </p>
+              <figure class="poster-preview">
+                <a href="assets/memory-money-milestones-poster.jpeg" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Memory, Money, Milestones poster in a new tab">
+                  <img
+                    src="assets/memory-money-milestones-poster.jpeg"
+                    alt="Research poster titled Memory, Money, Milestones: How SES Moderates Reading Development"
+                  />
+                </a>
+                <figcaption>
+                  Memory, Money, Milestones research poster
+                </figcaption>
+              </figure>
+              <div class="poster-description">
+                <h4>Memory, Money, Milestones: How SES Moderates Reading Development</h4>
+                <p class="poster-date">August 2024-May 2025</p>
+                <p>
+                  Analyzed how socioeconomic status (SES) influences the
+                  relationship between working memory and academic performance
+                  using national longitudinal data (ECLS-K:2011). Conducted
+                  moderation analysis to identify patterns in decision-making
+                  and outcomes. Translated findings into actionable insights
+                  with implications for behavior, resource allocation, and
+                  long-term planning. Presented findings at Temple University
+                  Symposium for Undergraduate Research and Creativity 2025.
+                </p>
+              </div>
+            </section>
+
+            <section aria-labelledby="key-findings-title">
+              <h3 id="key-findings-title">Key findings</h3>
+              <ul class="key-findings">
+                <li>Working memory predicts reading achievement across contexts</li>
+                <li>Socioeconomic status changes how strongly early skills translate into outcomes</li>
+                <li>Resource access can strengthen reading pathways, especially in lower-SES contexts</li>
+              </ul>
+            </section>
+
+            <section aria-labelledby="student-stories-note-title">
+              <h3 id="student-stories-note-title">Note on student stories</h3>
+              <p class="source-note">
+                The Maya case study is fictional and is used as an
+                illustrative tool to help explain research patterns. It is not
+                based on or drawn from a specific participant in the
+                ECLS-K:2011 dataset.
+              </p>
+            </section>
+
+            <p class="closing-note">
+              These materials were developed as part of a faculty-reviewed
+              research project. The simulator translates these findings into an
+              interactive format to support understanding and discussion.
+            </p>
+          </div>
+        </details>
+      </section>
+
+      <footer class="research-footer readable-section" id="data-source-disclaimer" aria-labelledby="research-foundation-title">
+        <h2 id="research-foundation-title">Data Source &amp; Disclaimer</h2>
+        <button class="listen-btn" data-read-target="data-source-disclaimer" type="button" aria-pressed="false">
+          <span aria-hidden="true">🔊</span> Listen to data source and disclaimer
+        </button>
+        <p>
+          Based on patterns observed in the Early Childhood Longitudinal Study
+          (ECLS-K:2011), a nationally representative longitudinal dataset that
+          follows children's development from kindergarten through fifth grade.
+        </p>
+        <p>
+          This tool uses simplified models to illustrate how early working
+          memory, socioeconomic context, and access to resources interact to
+          shape reading development.
+        </p>
+        <p>
+          This is an educational tool and does not predict individual outcomes.
+        </p>
+        <a
+          class="data-source-link"
+          href="https://nces.ed.gov/ecls/kindergarten2011.asp"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open ECLS-K:2011 study page on the NCES website in a new tab"
+        >
+          Data source: ECLS-K:2011 (NCES)
+        </a>
+        <p>
+          The ECLS-K:2011 collects data from children, families, teachers, and
+          schools across the United States, allowing researchers to examine how
+          home, school, and individual factors influence learning over time.
+        </p>
+        <p>
+          This project is independently developed and is not affiliated with or
+          endorsed by the U.S. Department of Education or the National Center
+          for Education Statistics. The dataset is used as a public research
+          resource.
+        </p>
+        <p class="footer-fineprint">Data source: NCES ECLS-K:2011 (public dataset)</p>
+      </footer>
+
+      <button class="mobile-results-dock" id="mobile-results-dock" type="button" aria-label="View full results">
+        <span><strong id="mobile-score">61.04</strong> Estimated growth</span>
+        <em id="mobile-growth-label">Moderate expected reading growth</em>
+        <b>View full results</b>
+      </button>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
